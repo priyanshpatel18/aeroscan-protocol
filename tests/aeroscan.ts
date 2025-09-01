@@ -2,8 +2,8 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { Aeroscan } from "../target/types/aeroscan";
 
-const HELIUS_RPC_URL = "https://devnet.helius-rpc.com/?api-key=<YOUR_API_KEY>";
-const HELIUS_WS_URL = "wss://devnet.helius-rpc.com/?api-key=<YOUR_API_KEY>";
+const HELIUS_RPC_URL = "https://devnet.helius-rpc.com/?api-key=9f52f156-8987-4d04-953f-54db6be65ec2";
+const HELIUS_WS_URL = "wss://devnet.helius-rpc.com/?api-key=9f52f156-8987-4d04-953f-54db6be65ec2";
 
 describe("aeroscan", () => {
   const connection = new anchor.web3.Connection(HELIUS_RPC_URL, {
