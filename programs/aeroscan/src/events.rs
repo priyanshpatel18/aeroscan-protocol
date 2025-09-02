@@ -6,5 +6,6 @@ pub struct SensorReadingEvent {
     pub pm10: u16,
     pub temperature: u16,
     pub humidity: u16,
+    pub aqi: u16,
     pub timestamp: u64,
 }

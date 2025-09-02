@@ -1,6 +1,5 @@
 use anchor_lang::prelude::*;
 use crate::{
-    events::SensorReadingEvent, 
     states::{SensorReading}
 };
 
@@ -28,25 +27,17 @@ impl<'info> InitializeReading<'info> {
         pm10: u16,
         temperature: u16,
         humidity: u16,
-        bumps: InitializeReadingBumps,
+        aqi: u16
     ) -> Result<()> {
         let timestamp: u64 = Clock::get()?.unix_timestamp as u64;
         self.sensor_reading.set_inner(SensorReading {
             authority: self.user.key(),
-            bump: bumps.sensor_reading,
             pm25,
             pm10,
             temperature,
             humidity,
             timestamp,
-        });
-
-        emit!(SensorReadingEvent {
-            pm25,
-            pm10,
-            temperature,
-            humidity,
-            timestamp,
+            aqi
         });
 
         Ok(())

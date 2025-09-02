@@ -126,7 +126,7 @@ await program.methods
 
 ## Program Addresses
 
-- **Program ID**: `aeroPZ5LCkAQJ54nW1NDTA36Qqkrc9xZ42fMk87KRad`
+- **Program ID**: `aeroXd2SksYj5zdZVVgmFCiUbr8wcj9vW7eAECdmax4`
 - **Sensor Reading PDA**: Derived from `["sensor_reading", user_pubkey]`
 
 ## Events

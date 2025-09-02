@@ -2,8 +2,8 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { Aeroscan } from "../target/types/aeroscan";
 
-const HELIUS_RPC_URL = "https://devnet.helius-rpc.com/?api-key=9f52f156-8987-4d04-953f-54db6be65ec2";
-const HELIUS_WS_URL = "wss://devnet.helius-rpc.com/?api-key=9f52f156-8987-4d04-953f-54db6be65ec2";
+const HELIUS_RPC_URL = "https://devnet.helius-rpc.com/?api-key=<YOUR_API_KEY>";
+const HELIUS_WS_URL = "wss://devnet.helius-rpc.com/?api-key=<YOUR_API_KEY>";
 
 describe("aeroscan", () => {
   const connection = new anchor.web3.Connection(HELIUS_RPC_URL, {
@@ -45,6 +45,7 @@ describe("aeroscan", () => {
         0,
         0,
         0,
+        0,
         0
       )
       .accountsPartial({
@@ -57,15 +58,16 @@ describe("aeroscan", () => {
     console.log(`${duration}ms (Base Layer) Initialize txHash: ${txHash}`);
   });
 
-  it("Update position on Solana", async () => {
+  it.only("Update reading on Solana", async () => {
     const start = Date.now();
     const pm25 = 0;
     const pm10 = 0;
     const temperature = 0;
     const humidity = 0;
+    const aqi = 0;
 
     const txHash = await program.methods
-      .updateReading(provider.wallet.publicKey, pm25, pm10, temperature, humidity)
+      .updateReading(provider.wallet.publicKey, pm25, pm10, temperature, humidity, aqi)
       .accountsPartial({
         sensorReading: sensor_reading,
       })
@@ -74,12 +76,12 @@ describe("aeroscan", () => {
     console.log(`${duration}ms (Base Layer) Increment txHash: ${txHash}`);
   });
 
-  it("Delegate position to ER", async () => {
+  it("Delegate reading to ER", async () => {
     const start = Date.now();
     let tx = await program.methods
       .delegate()
       .accounts({
-        payer: provider.wallet.publicKey,
+        user: provider.wallet.publicKey,
         sensorReading: sensor_reading,
       })
       .transaction();
@@ -96,20 +98,23 @@ describe("aeroscan", () => {
     console.log(`${duration}ms (Base Layer) Delegate txHash: ${txHash}`);
   });
 
-  it("Update position on ER", async () => {
+  it("Update reading on ER", async () => {
     try {
       const start = Date.now();
       const pm25 = 0;
       const pm10 = 0;
       const temperature = 0;
       const humidity = 0;
+      const aqi = 0;
 
       let tx = await program.methods
-        .updateReading(provider.wallet.publicKey, pm25, pm10, temperature, humidity)
+        .updateReading(provider.wallet.publicKey, pm25, pm10, temperature, humidity, aqi)
         .accountsPartial({
           sensorReading: sensor_reading,
         })
+        .signers([])
         .transaction();
+
       tx.feePayer = providerEphemeralRollup.wallet.publicKey;
       tx.recentBlockhash = (
         await providerEphemeralRollup.connection.getLatestBlockhash()
@@ -123,7 +128,7 @@ describe("aeroscan", () => {
     }
   });
 
-  it("Undelegate position on ER to Solana", async () => {
+  it("Undelegate reading on ER to Solana", async () => {
     const start = Date.now();
     let tx = await program.methods
       .undelegate()

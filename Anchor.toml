@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-aeroscan = "aeroPZ5LCkAQJ54nW1NDTA36Qqkrc9xZ42fMk87KRad"
+aeroscan = "aero8wSmn3uAj5g5jYq92Rd2SQv2MtGxu1ZXfysfFHX"
 
 [registry]
 url = "https://api.apr.dev"

@@ -1,14 +1,12 @@
 use anchor_lang::prelude::*;
 use ephemeral_rollups_sdk::anchor::ephemeral;
 
-declare_id!("aeroPZ5LCkAQJ54nW1NDTA36Qqkrc9xZ42fMk87KRad");
+declare_id!("aero8wSmn3uAj5g5jYq92Rd2SQv2MtGxu1ZXfysfFHX");
 
-pub mod errors;
 pub mod events;
 pub mod instructions;
 pub mod states;
 
-pub use events::*;
 pub use instructions::*;
 
 #[ephemeral]
@@ -22,9 +20,10 @@ pub mod aeroscan {
         pm10: u16,
         temperature: u16,
         humidity: u16,
+        aqi: u16
     ) -> Result<()> {
         ctx.accounts
-            .init(pm25, pm10, temperature, humidity, ctx.bumps)
+            .init(pm25, pm10, temperature, humidity, aqi)
     }
 
     pub fn update_reading(
@@ -34,9 +33,10 @@ pub mod aeroscan {
         pm10: u16,
         temperature: u16,
         humidity: u16,
+        aqi: u16
     ) -> Result<()> {
         ctx.accounts
-            .update_reading(authority, pm25, pm10, temperature, humidity)
+            .update_reading(authority, pm25, pm10, temperature, humidity, aqi)
     }
 
     pub fn delegate(ctx: Context<DelegateReading>) -> Result<()> {
