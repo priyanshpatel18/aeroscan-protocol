@@ -80,7 +80,7 @@ The protocol is configured to work with:
 
 ```typescript
 await program.methods
-  .initialize(pm25, pm10, temperature, humidity)
+  .initialize(pm25, pm10, temperature, humidity, aqi)
   .accountsPartial({
     sensorReading: sensor_reading_pda,
     user: wallet.publicKey,
@@ -93,7 +93,7 @@ await program.methods
 
 ```typescript
 await program.methods
-  .updateReading(authority, pm25, pm10, temperature, humidity)
+  .updateReading(authority, pm25, pm10, temperature, humidity, aqi)
   .accountsPartial({
     sensorReading: sensor_reading_pda,
   })
@@ -126,7 +126,7 @@ await program.methods
 
 ## Program Addresses
 
-- **Program ID**: `aeroXd2SksYj5zdZVVgmFCiUbr8wcj9vW7eAECdmax4`
+- **Program ID**: `aero8wSmn3uAj5g5jYq92Rd2SQv2MtGxu1ZXfysfFHX`
 - **Sensor Reading PDA**: Derived from `["sensor_reading", user_pubkey]`
 
 ## Events
@@ -171,12 +171,6 @@ The tests cover:
 - **Verifiable Data**: Cryptographically secured sensor readings
 - **Decentralized**: No single point of failure or control
 - **Transparent**: Public access to environmental data
-
-## Error Handling
-
-The protocol includes custom error codes for:
-- **Unauthorized**: When non-authority attempts to update sensor data
-- Additional error handling as defined in the `errors` module
 
 ## Contributing
 
